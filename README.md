@@ -1,5 +1,10 @@
 # ukt-pwa
 
+
+## Clonning Project
+```
+git clone
+```
 ## Project setup
 ```
 npm install
