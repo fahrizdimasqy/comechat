@@ -1,0 +1,6 @@
+{
+  "appId": "com.example.livescore_v2",
+  "appName": "LiveScore",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}
