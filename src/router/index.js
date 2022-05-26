@@ -7,34 +7,37 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    name: 'login',
+
+    component: () =>
+      import(/* webpackChunkName: "TopScore" */ '../views/Login.vue'),
+  },
+  {
+    path: '/home',
     name: 'Home',
     component: Home,
   },
+
   {
-    path: '/topscore',
-    name: 'TopScore',
-    // route level code-splitting
-    // this generates a separate chunk (TopScore.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+    path: '/chat',
+    name: 'chat',
+
     component: () =>
-      import(/* webpackChunkName: "TopScore" */ '../views/TopScore.vue'),
+      import(/* webpackChunkName: "TopScore" */ '../views/Chat.vue'),
   },
+  // {
+  //   path: '/login',
+  //   name: 'login',
+
+  //   component: () =>
+  //     import(/* webpackChunkName: "TopScore" */ '../views/Login.vue'),
+  // },
   {
-    path: '/team',
-    name: 'Team',
-    // route level code-splitting
-    // this generates a separate chunk (Team.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "Team" */ '../views/Team.vue'),
-  },
-  {
-    path: '/statistic',
-    name: 'Statistic',
-    // route level code-splitting
-    // this generates a separate chunk (Team.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+    path: '/register',
+    name: 'signup',
+
     component: () =>
-      import(/* webpackChunkName: "Team" */ '../views/Statistic.vue'),
+      import(/* webpackChunkName: "TopScore" */ '../views/Signup.vue'),
   },
 ]
 

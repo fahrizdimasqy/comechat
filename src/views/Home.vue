@@ -1,80 +1,71 @@
 <template>
-  <div class="mt-5 mb-15">
-    <h2 class="px-3 text-primary">First Team Result</h2>
-    <v-slide-group v-model="model" active-class="success">
-      <v-slide-item
-        v-for="fl in firsteams"
-        :key="fl.match_id"
-        v-slot="{ toggle }"
-      >
-        <v-card class="ma-4 myshadow" height="150" width="250" @click="toggle">
-          <div class="my-auto">
-            <v-container>
-              <div class="d-flex align-center">
-                <v-avatar size="48" class="me-2">
-                  <img :src="fl.team_away_badge" alt="" />
-                </v-avatar>
-                <h5>{{ fl.match_awayteam_name }}</h5>
-                <v-spacer></v-spacer>
-                <h4>{{ fl.match_awayteam_score }}</h4>
-              </div>
-            </v-container>
-            <div>
-              <v-divider>
-                <p>Vs</p>
-              </v-divider>
-            </div>
-            <v-container>
-              <div class="d-flex align-center">
-                <v-avatar size="48" class="me-2">
-                  <img :src="fl.team_home_badge" alt="" />
-                </v-avatar>
-                <h5>{{ fl.match_hometeam_name }}</h5>
-                <v-spacer></v-spacer>
-                <h4>{{ fl.match_hometeam_score }}</h4>
-              </div>
-            </v-container>
-          </div>
-        </v-card>
-      </v-slide-item>
-    </v-slide-group>
-    <div>
-      <h2 class="px-3 mb-3 mt-3">Last Team Result</h2>
-      <v-card
-        v-for="st in secondteams"
-        :key="st.match_id"
-        class="mx-auto mb-2"
-        max-width="344"
-        outlined
-      >
-        <v-list-item three-line>
-          <v-list-item-content>
-            <div class="d-flex mb-3 align-center">
-              <v-avatar size="48" class="me-2">
-                <img :src="st.team_away_badge" alt="" />
-              </v-avatar>
-              <h5 class="me-1">{{ st.match_awayteam_name }}</h5>
-              <v-spacer></v-spacer>
-              <p class="mt-4">{{ st.match_awayteam_score }}</p>
-            </div>
+  <div style="height: 100%;">
+    <v-toolbar color="indigo darken-4" dark>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-            <!-- <v-list-item-title class="text-h5 mb-1">
-              Headline 5
-            </v-list-item-title> -->
-            <div class="d-flex align-center">
-              <v-avatar size="48" class="me-2">
-                <img :src="st.team_home_badge" alt="" />
-              </v-avatar>
-              <h5>{{ st.match_hometeam_name }}</h5>
-              <v-spacer></v-spacer>
-              <p class="mt-4">{{ st.match_hometeam_score }}</p>
-            </div>
-          </v-list-item-content>
-          <v-spacer></v-spacer>
-          <h5>{{ st.match_date }}</h5>
-        </v-list-item>
+      <v-toolbar-title>Inbox</v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+    </v-toolbar>
+    <v-navigation-drawer v-model="drawer" absolute temporary>
+      <v-card>
+        <v-list nav dense>
+          <v-list-item-group
+            v-model="group"
+            active-class="deep-purple--text text--accent-4"
+          >
+            <v-list-item>
+              <v-avatar color="primary" size="48"></v-avatar>
+              <h5 class="ms-2">Dimas</h5>
+            </v-list-item>
+            <v-divider class="mt-5"></v-divider>
+            <v-list-item class="mt-5">
+              <v-btn color="error">Logout</v-btn>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
       </v-card>
-    </div>
+    </v-navigation-drawer>
+    <v-list three-line color="">
+      <template v-for="(item, index) in items">
+        <v-card
+          max-width="450"
+          class="mx-auto"
+          color=""
+          to="/chat"
+          :key="item.index"
+        >
+          <v-subheader
+            v-if="item.header"
+            :key="item.header"
+            v-text="item.header"
+          ></v-subheader>
+
+          <v-divider
+            v-else-if="item.divider"
+            :key="index"
+            :inset="item.inset"
+          ></v-divider>
+
+          <v-list-item v-else :key="item.title">
+            <v-list-item-avatar>
+              <v-img :src="item.avatar"></v-img>
+            </v-list-item-avatar>
+
+            <v-list-item-content>
+              <v-list-item-title v-html="item.title"></v-list-item-title>
+              <v-list-item-subtitle
+                v-html="item.subtitle"
+              ></v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
+      </template>
+    </v-list>
   </div>
 </template>
 
@@ -84,27 +75,43 @@
 export default {
   name: 'Home',
   data: () => ({
-    model: null,
-    firsteams: {},
-    secondteams: {},
-    h2h: {},
+    drawer: false,
+    group: null,
+    items: [
+      { header: 'Today' },
+      {
+        avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+        title: 'Brunch this weekend?',
+        subtitle: `<span class="text--white">Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
+      },
+      { divider: true, inset: true },
+      {
+        avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
+        title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
+        subtitle: `<span class="text--white">to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend.`,
+      },
+      { divider: true, inset: true },
+      {
+        avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+        title: 'Oui oui',
+        subtitle:
+          '<span class="text--white">Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?',
+      },
+      { divider: true, inset: true },
+      {
+        avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
+        title: 'Birthday gift',
+        subtitle:
+          '<span class="text--white">Trevor Hansen</span> &mdash; Have any ideas about what we should get Heidi for her birthday?',
+      },
+      { divider: true, inset: true },
+      {
+        avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg',
+        title: 'Recipe to try',
+        subtitle:
+          '<span class="text--white">Britta Holt</span> &mdash; We should eat this: Grate, Squash, Corn, and tomatillo Tacos.',
+      },
+    ],
   }),
-  created() {
-    this.axios
-      .get(
-        'https://apiv3.apifootball.com/?action=get_H2H&firstTeamId=7275&secondTeamId=151&APIkey=0b3a2166786c39c5c38f91ee986af9356ca95ffea6e571819ff0c6ae85968d58',
-      )
-      .then((response) => {
-        let firstTeam_lastResults = response.data.firstTeam_lastResults
-        this.firsteams = firstTeam_lastResults
-        let secondTeam_lastResults = response.data.secondTeam_lastResults
-        this.secondteams = secondTeam_lastResults
-        console.log(this.secondteams)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-  },
-  components: {},
 }
 </script>

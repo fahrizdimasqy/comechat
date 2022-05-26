@@ -1,5 +1,5 @@
 {
-  "name": "ukt-pwa",
+  "name": "letchat",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,6 +13,8 @@
     "@capacitor/core": "^3.5.1",
     "axios": "^0.27.0",
     "core-js": "^3.6.5",
+    "firebase": "^9.8.1",
+    "firebaseui": "^6.0.1",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
     "vue-axios": "^3.4.1",
